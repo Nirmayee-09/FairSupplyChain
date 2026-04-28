@@ -257,7 +257,61 @@ async def predict_batch(body: BatchPredictRequest) -> BatchPredictionResponse:
         raise HTTPException(status_code=500, detail="Internal model error") from exc
 
     responses = [_result_to_response(r) for r in results]
+
+    # Write batch results to Supabase segment_states table
+    if _supabase is not None:
+        try:
+            payloads = [
+                {
+                    "segment_id":                   r.segment_id,
+                    "current_timestamp_utc":         r.current_timestamp_utc,
+                    "isolation_forest_raw_score":    r.isolation_forest_raw_score,
+                    "normalized_risk_probability":   r.normalized_risk_probability,
+                    "dominant_anomalous_features":   r.dominant_anomalous_features,
+                    "model_confidence_interval":     r.model_confidence_interval,
+                    "risk_tier":                     r.risk_tier,
+                }
+                for r in responses
+            ]
+            _supabase.table("segment_states").upsert(payloads, on_conflict="segment_id").execute()
+            logger.info("Batch Supabase write successful for %d segments.", len(payloads))
+        except Exception as exc:
+            logger.warning("Batch Supabase write failed: %s", exc)
+
     return BatchPredictionResponse(predictions=responses, total=len(responses))
+
+
+@router.get(
+    "/scores",
+    response_model=list[PredictionResponse],
+    summary="Fetch current anomaly scores for all segments",
+)
+async def get_scores():
+    """Returns the latest scores from the segment_states table."""
+    if _supabase is None:
+        return []
+    try:
+        res = _supabase.table("segment_states").select("*").execute()
+        return res.data
+    except Exception as exc:
+        logger.error("Failed to fetch scores from Supabase: %s", exc)
+        return []
+
+
+@router.get(
+    "/alerts",
+    summary="Fetch recent alerts",
+)
+async def get_alerts():
+    """Returns recent alerts from the alerts table."""
+    if _supabase is None:
+        return []
+    try:
+        res = _supabase.table("alerts").select("*").order("created_at", desc=True).limit(20).execute()
+        return res.data
+    except Exception as exc:
+        logger.error("Failed to fetch alerts from Supabase: %s", exc)
+        return []
 
 
 @router.get(

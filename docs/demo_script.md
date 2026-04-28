@@ -1,63 +1,49 @@
-# FairChain Demo Video Script (3 Minutes)
+# FairChain Demo Video Script
 
-## Setup & Tech Requirements
-- **Resolution:** 1080p60
-- **Recording Tool:** OBS Studio
-- **Browser:** Chrome (Fullscreen, no extensions visible, hardware acceleration ON to prevent Mapbox lag)
-- **Presenters:** Garud (Voiceover), Nirmayee (Screen Driver)
+**Duration**: ~120 Seconds
+**Target**: Hackathon Judges / Product Stakeholders
+**Voiceover Tone**: Professional, confident, and tech-forward.
 
 ---
 
-## [0:00 - 0:30] The Problem & Vision
-**Visual:** 
-- Start on Title Slide (FairChain: Fair & Predictive Supply Chain Intelligence).
-- Cut to Slide 2: High-impact imagery of flooded roads and logistics bottleneck.
-
-**Voiceover (Garud):**
-"Every year, unpredicted extreme weather events cost the Indian supply chain billions in holding costs and spoilage. Current logistics software reacts too slowly—and worse, it is inherently biased against local SME transporters, favoring massive enterprise carriers just because they have more historical data. Today, we're introducing FairChain: predictive, fair, and fast logistics routing."
+## 00:00 – 00:15 | Hook & Intro
+**Visual**: Zoom into the FairChain Dashboard. The Mapbox "Live Route Viewport" is active, showing glowing blue segments across India's National Highways.
+**Voiceover**: "Supply chains are fragile. A single flood or traffic anomaly can cost millions and delay critical cargo for days. Welcome to FairChain—the AI-powered disruption engine that turns raw sensor data into proactive logistics decisions."
 
 ---
 
-## [0:30 - 1:30] The Technical Stack & Predictive Anomaly (T-4 Hours)
-**Visual:**
-- Cut to the FairChain Next.js Dashboard (Mapbox layer showing Chennai region).
-- The timeline slider moves to 'T-8 Hours'. A mild yellow warning appears over NH48.
-- Timeline slider moves to 'T-4 Hours'. The segment turns bright red. An alert modal pops up.
-
-**Voiceover (Garud):**
-"Here is the Chennai Flood 2023 scenario. At T-4 hours—four full hours before the official road closure—our Isolation Forest machine learning models process live IMD rainfall spikes and telematics data. Our system flags a critical disruption."
-
-**Visual:**
-- Nirmayee clicks the red segment. A Gemini-powered impact summary opens.
-
-**Voiceover (Garud):**
-"To translate raw ML scores into human action, we integrated the Google Gemini API. Here, it instantly generates a human impact summary: 'Severe flooding puts 50 workers and ₹20L in perishable cargo at immediate risk,' along with one-sentence actionable advice to reroute immediately."
+## 00:15 – 00:40 | Real-Time Monitoring & Anomaly Matrix
+**Visual**: Click on the **"Anomaly Matrix"** tab. Show the list of highways (NH48, NH16). Some rows show 0% risk (Green), others are drifting upwards.
+**Voiceover**: "Our Tier-1 monitoring stack uses an Isolation Forest model to ingest live rainfall, water levels, and vehicle velocity. While other systems react to closures, FairChain detects anomalies hours before they become roadblocks. Every segment is scored in real-time, giving fleet managers a unified 'Anomaly Detection Matrix' of their entire network."
 
 ---
 
-## [1:30 - 2:30] The 'Aha!' Moment: Fairness in Action
-**Visual:**
-- Nirmayee clicks 'Generate Alternative Routes'. 
-- Two options appear: Route A (Enterprise Partner - ₹5.0L) and Route B (Local SME - ₹1.5L).
-- The raw ML confidence for Route A is 0.95, and Route B is 0.45.
-- Nirmayee toggles the 'Fairness Scorecard' view.
-
-**Voiceover (Garud):**
-"Here is the 'Aha!' moment. When finding a new route, the traditional AI suggests an expensive Enterprise Partner over a highly capable Local SME. Why? Simply because the enterprise has driven the route more times, creating a data volume bias."
-
-**Visual:**
-- The Dashboard debiases the score. Route B's fairness-adjusted score becomes 0.92.
-- A green checkmark appears next to the Local SME.
-
-**Voiceover (Garud):**
-"By applying our fairness algorithms, we normalize the confidence scores based on vendor size. We instantly debias the AI, preventing a monopoly by enterprise carriers during crisis events and securing a 22% cost reduction by safely utilizing qualified local SMEs."
+## 00:40 – 01:10 | The "Magic Moment" — Chennai Flood Replay
+**Visual**: Click back to the Map tab. Press the **"🌊 Chennai Flood Replay"** button. The HUD appears: **"T-12h"**. As the clock ticks down, a segment on NH48 turns Orange at **T-6h**, then deep Red at **T-4h**.
+**Voiceover**: "Let’s look at the magic. We’ve reconstructed the 2023 Chennai Floods. Watch as our model flags the NH48 corridor at T-minus 6 hours. While official road closures are still hours away, FairChain’s Isolation Forest detects the rainfall spike and velocity plunge, triggering a critical alert before the convoy even enters the danger zone."
 
 ---
 
-## [2:30 - 3:00] Conclusion & Future
-**Visual:**
-- Cut to the final Pitch Deck slide (Open Innovation & Roadmap).
-- Fade to FairChain Logo and GitHub QR code.
+## 01:10 – 01:35 | Gemini AI & Rerouting
+**Visual**: Click on the Red segment on the map. The **Gemini AI Insight Console** on the right expands. It shows "Human Impact: 50 workers at risk" and "Actionable Advice: Reroute via Vellore."
+**Voiceover**: "Data without context is noise. FairChain integrates Google Gemini 1.5 Pro to provide instant explainability. It translates raw ML scores into human impact statements and actionable logistics advice, ensuring your dispatchers know exactly *why* they need to pivot."
 
-**Voiceover (Garud):**
-"FairChain isn't just about surviving disruptions; it's about equitable growth. By combining predictive anomaly detection, Google Gemini explainability, and fairness-aware routing, we make logistics resilient and fair for everyone. Thank you."
+---
+
+## 01:35 – 01:50 | The Fairness Layer
+**Visual**: Click the **"Fairness Scorecard"** button in the top nav. A modal pops up showing the **"Disparate Impact Ratio"** and the **"Mitigation Engine"** results.
+**Voiceover**: "But we go beyond logistics. FairChain’s Fairness Layer audits every contract. When our AI trust scores show bias against SMEs or women-owned carriers, our mitigation engine reweighs the metrics, ensuring an equitable distribution of contracts and building a truly inclusive supply chain."
+
+---
+
+## 01:50 – 02:00 | Conclusion
+**Visual**: Zoom out to show the full dashboard: "All Systems Nominal." The FairChain logo fades in.
+**Voiceover**: "Predictive. Explainable. Fair. This is the future of logistics. This is FairChain."
+
+---
+
+## Demo Checklist for Recording:
+1. **Reset State**: Ensure Supabase is connected (Green 'Live' indicator).
+2. **Matrix View**: Start on the Matrix to show the rows I just fixed.
+3. **Replay Flow**: Trigger the Chennai Replay; it’s the most visually "WOW" feature.
+4. **Modal Interaction**: Open the Fairness Scorecard to show the auditing depth.

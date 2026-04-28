@@ -65,25 +65,18 @@ function buildShipmentGeoJSON(
     type: "FeatureCollection",
     features: shipments
       .map((ship) => {
-        const seg = segMap.get(ship.segment_id);
-        if (!seg) return null;
-        const lat =
-          seg.start_node_latlon[0] +
-          (seg.end_node_latlon[0] - seg.start_node_latlon[0]) * ship.progress;
-        const lng =
-          seg.start_node_latlon[1] +
-          (seg.end_node_latlon[1] - seg.start_node_latlon[1]) * ship.progress;
         return {
           type: "Feature" as const,
           properties: {
-            id: ship.id,
-            name: ship.name,
-            cargo: ship.cargo,
-            origin: ship.origin,
-            destination: ship.destination,
-            eta_hours: ship.eta_hours,
+            id: ship.shipment_id,
+            cargo: ship.cargo_type,
+            value: ship.value_inr,
+            status: ship.status,
           },
-          geometry: { type: "Point" as const, coordinates: [lng, lat] },
+          geometry: {
+            type: "Point" as const,
+            coordinates: [ship.latlon[1], ship.latlon[0]],
+          },
         };
       })
       .filter(Boolean) as GeoJSON.Feature[],
@@ -249,10 +242,10 @@ export default function RouteVisualizer({
           .setLngLat(e.lngLat)
           .setHTML(
             `<div class="fc-popup-inner">
-               <span class="fc-popup-nh">${p.name}</span>
-               <div class="fc-popup-feat">${p.cargo}</div>
-               <div class="fc-popup-feat">${p.origin} → ${p.destination}</div>
-               <div class="fc-popup-risk" style="color:#3b82f6">ETA: ${p.eta_hours}h</div>
+               <span class="fc-popup-nh">${p.id}</span>
+               <div class="fc-popup-feat">Cargo: ${p.cargo}</div>
+               <div class="fc-popup-feat">Status: ${p.status.toUpperCase()}</div>
+               <div class="fc-popup-risk" style="color:#3b82f6">Value: ₹${(p.value / 100000).toFixed(1)}L</div>
              </div>`
           )
           .addTo(map);

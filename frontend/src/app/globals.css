@@ -8,7 +8,7 @@
   --foreground: #e2e8f0;   /* fc-200 */
 
   /* Risk tier */
-  --risk-green:  #22c55e;
+  --risk-green:  #22c55e;   /* Nominal risk is green */
   --risk-yellow: #eab308;
   --risk-orange: #f97316;
   --risk-red:    #ef4444;

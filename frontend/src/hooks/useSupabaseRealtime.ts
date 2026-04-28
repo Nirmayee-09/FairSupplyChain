@@ -82,16 +82,15 @@ export function useSupabaseRealtime(): RealtimeState {
 
       const isLive = scoresResult.live || alertsResult.live;
 
-      setState((prev) => ({
-        ...prev,
-        anomalyScores: scoresResult.data,
-        alerts: alertsResult.data,
-        connectionState: isLive ? prev.connectionState : "demo",
-        lastUpdated: new Date(),
-      }));
-
-      // If REST fetch failed for both, start demo loop as fallback
-      if (!isLive) {
+      if (isLive) {
+        setState((prev) => ({
+          ...prev,
+          anomalyScores: scoresResult.data.length > 0 ? scoresResult.data : prev.anomalyScores,
+          alerts: alertsResult.data.length > 0 ? alertsResult.data : prev.alerts,
+          connectionState: "live",
+          lastUpdated: new Date(),
+        }));
+      } else {
         startDemoLoop();
       }
     }

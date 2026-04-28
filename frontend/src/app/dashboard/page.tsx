@@ -157,12 +157,13 @@ export default function DashboardPage() {
   }, [fetchPredictions]);
 
   // ── Merge replay overrides into anomaly scores ────────────────────────────
-  const mergedScores = replayOverrides.length > 0
-    ? anomalyScores.map((s) => {
+const baseScores = anomalyScores ?? [];
+const mergedScores = replayOverrides.length > 0
+    ? baseScores.map((s) => {
         const override = replayOverrides.find((o) => o.segment_id === s.segment_id);
         return override ?? s;
       })
-    : anomalyScores;
+    : baseScores;
 
   // ── Derived data ──────────────────────────────────────────────────────────
   const selectedSegment = MOCK_SEGMENTS.find((s) => s.segment_id === selectedSegmentId) ?? null;
